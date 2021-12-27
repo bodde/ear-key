@@ -1,7 +1,7 @@
 <template>
-  <div class="app-key">
+  <div class="app-key" :class="{ selected: selected }">
     <span class="app-key-code">{{ code }}</span>
-    <small class="app-key-name">{{ name }}</small>
+    <small class="app-key-note">{{ note }}</small>
   </div>
 </template>
 
@@ -9,8 +9,9 @@
 export default {
   name: 'Key',
   props: {
-    name: String,
+    note: String,
     code: String,
+    selected: Boolean,
   },
 };
 </script>
@@ -32,6 +33,10 @@ export default {
   box-shadow: 0 0 5px black;
 }
 
+.app-key.selected {
+  background-color: aqua;
+}
+
 .app-key:first-child {
   border-width: 1px;
 }
@@ -39,7 +44,7 @@ export default {
 .app-key-code {
 }
 
-.app-key-name {
+.app-key-note {
   color: gray;
   position: absolute;
   bottom: 4px;
