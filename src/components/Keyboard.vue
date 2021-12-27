@@ -25,11 +25,16 @@
 
 <script>
 import Key from './Key.vue';
+import { Sampler, Transport, Synth, PolySynth } from 'tone';
 
 export default {
   name: 'Keyboard',
   components: {
     Key,
+  },
+  created: function () {
+    this.synth = new Synth().toDestination();
+    console.log(this.synth);
   },
   data: function () {
     return {
@@ -71,8 +76,11 @@ export default {
 
       allKeys.filter((_) => _.selected).forEach((_) => (_.selected = false));
 
-      const selectedNote = this.keys[keyset].find((_) => _.note == key.note);
-      selectedNote.selected = true;
+      const selectedKey = this.keys[keyset].find((_) => _.note == key.note);
+      selectedKey.selected = true;
+
+      const octave = 4;
+      this.synth.triggerAttackRelease(selectedKey.note + octave, '8n');
     },
   },
 };
