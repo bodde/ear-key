@@ -1,7 +1,22 @@
 <template>
-  <Key v-for="key in keys.a" :name="key.note" />
-  <Key name="C#" />
-  <Key name="D" />
+  <div class="app-keyboard">
+    <div class="app-keysets">
+      <div class="app-keyset">
+        <Key
+          v-for="(key, index) in keys.minor"
+          :name="key.note"
+          :code="(index + 1).toString() + 'A'"
+        />
+      </div>
+      <div class="app-keyset">
+        <Key
+          v-for="(key, index) in keys.major"
+          :name="key.note"
+          :code="(index + 1).toString() + 'B'"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -15,7 +30,7 @@ export default {
   data: function () {
     return {
       keys: {
-        a: [
+        minor: [
           { note: 'G#', scale: [] },
           { note: 'D#', scale: [] },
           { note: 'A#', scale: [] },
@@ -29,6 +44,20 @@ export default {
           { note: 'F#', scale: [] },
           { note: 'C#', scale: [] },
         ],
+        major: [
+          { note: 'B', scale: [] },
+          { note: 'F#', scale: [] },
+          { note: 'C#', scale: [] },
+          { note: 'G#', scale: [] },
+          { note: 'D#', scale: [] },
+          { note: 'A#', scale: [] },
+          { note: 'F', scale: [] },
+          { note: 'C', scale: [] },
+          { note: 'G', scale: [] },
+          { note: 'D', scale: [] },
+          { note: 'A', scale: [] },
+          { note: 'E', scale: [] },
+        ],
       },
     };
   },
@@ -36,15 +65,22 @@ export default {
 </script>
 
 <style scoped>
-div.app-key {
-  width: 30px;
-  height: 30px;
-  border-color: black;
-  border-style: solid;
-  border-width: 0 1px 1px 1px;
+.app-keyboard {
+  display: flex;
+  flex-direction: row;
 }
 
-div.app-key:first-child {
-  border-width: 1px;
+.app-keysets {
+  display: flex;
+  flex-direction: row;
+}
+
+.app-keyset {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-keyset:first-child .app-key {
+  border-right: 0;
 }
 </style>
