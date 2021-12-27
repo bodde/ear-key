@@ -25,6 +25,11 @@ export default {
   border-style: solid;
   border-width: 0 1px 1px 1px;
   position: relative;
+  cursor: pointer;
+}
+
+.app-key:hover {
+  box-shadow: 0 0 5px black;
 }
 
 .app-key:first-child {
