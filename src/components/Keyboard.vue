@@ -1,24 +1,24 @@
 <template>
   <div class="fx-layout-col">
     <div class="fx-layout-col"></div>
-
     <div class="fx-layout-col">
       <div class="app-scale fx-layout-row">
         <scale-key
-          v-for="(key, index) in keys.minor"
+          v-for="(key, index) in scales.minor"
           :note="key.note"
           :code="(index + 1).toString() + 'A'"
           :selected="key.selected"
-          @click="select(key, 'minor')"
+          @click="select(key)"
         />
       </div>
       <div class="app-scale fx-layout-row">
         <scale-key
-          v-for="(key, index) in keys.major"
+          v-for="(key, index) in scales.major"
+          :key="key"
           :note="key.note"
           :code="(index + 1).toString() + 'B'"
           :selected="key.selected"
-          @click="select(key, 'major')"
+          @click="select(key)"
         />
       </div>
     </div>
@@ -41,8 +41,8 @@ export default {
   data: function () {
     return {
       notes: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
-      sharpNotes: ['C#', 'D#', 'F#', 'G#', 'A#'],
-      keys: {
+      sharpNotes: ['C#', 'D#', null, 'F#', 'G#', 'A#'],
+      scales: {
         minor: [
           { note: 'G#', scale: [] },
           { note: 'D#', scale: [] },
@@ -75,16 +75,15 @@ export default {
     };
   },
   methods: {
-    select: function (key, scale) {
-      const allKeys = this.keys.minor.concat(this.keys.major);
+    select: function (scaleKey) {
+      const allKeys = [...this.scales.minor, ...this.scales.major];
 
       allKeys.filter((_) => _.selected).forEach((_) => (_.selected = false));
 
-      const selectedKey = this.keys[scale].find((_) => _.note == key.note);
-      selectedKey.selected = true;
+      scaleKey.selected = true;
 
       const octave = 4;
-      this.synth.triggerAttackRelease(selectedKey.note + octave, '8n');
+      this.synth.triggerAttackRelease(scaleKey.note + octave, '8n');
     },
   },
 };
