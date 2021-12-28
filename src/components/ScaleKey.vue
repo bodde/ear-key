@@ -1,7 +1,7 @@
 <template>
   <div
     class="app-scale-key"
-    :class="{ selected: selected }"
+    :class="{ selected: score == 5 }"
     v-bind:style="{ opacity: (score * 2) / 10 }"
   >
     <span class="app-scale-key-code">{{ code }}</span>
