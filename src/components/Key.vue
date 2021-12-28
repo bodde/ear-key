@@ -20,11 +20,9 @@ export default {
 .app-key {
   font-size: 14px;
   padding: 4px;
-  width: 40px;
+  min-width: 40px;
   height: 40px;
-  border-color: black;
-  border-style: solid;
-  border-width: 0 1px 1px 1px;
+  border: 1px solid black;
   position: relative;
   cursor: pointer;
 }

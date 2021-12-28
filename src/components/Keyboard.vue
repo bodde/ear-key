@@ -1,7 +1,7 @@
 <template>
-  <div class="app-keyboard">
-    <div class="app-keysets">
-      <div class="app-keyset">
+  <div class="fx-layout-col">
+    <div class="fx-layout-col">
+      <div class="app-keyset fx-layout-row">
         <Key
           v-for="(key, index) in keys.minor"
           :note="key.note"
@@ -10,7 +10,7 @@
           @click="select(key, 'minor')"
         />
       </div>
-      <div class="app-keyset">
+      <div class="app-keyset fx-layout-row">
         <Key
           v-for="(key, index) in keys.major"
           :note="key.note"
@@ -40,32 +40,32 @@ export default {
     return {
       keys: {
         minor: [
-          { note: 'G#', scale: [], selected: false },
-          { note: 'D#', scale: [], selected: false },
-          { note: 'A#', scale: [], selected: false },
-          { note: 'F', scale: [], selected: false },
-          { note: 'C', scale: [], selected: false },
-          { note: 'G', scale: [], selected: false },
-          { note: 'D', scale: [], selected: false },
-          { note: 'A', scale: [], selected: false },
-          { note: 'E', scale: [], selected: false },
-          { note: 'B', scale: [], selected: false },
-          { note: 'F#', scale: [], selected: false },
-          { note: 'C#', scale: [], selected: false },
+          { note: 'G#', scale: [] },
+          { note: 'D#', scale: [] },
+          { note: 'A#', scale: [] },
+          { note: 'F', scale: [] },
+          { note: 'C', scale: [] },
+          { note: 'G', scale: [] },
+          { note: 'D', scale: [] },
+          { note: 'A', scale: [] },
+          { note: 'E', scale: [] },
+          { note: 'B', scale: [] },
+          { note: 'F#', scale: [] },
+          { note: 'C#', scale: [] },
         ],
         major: [
-          { note: 'B', scale: [], selected: false },
-          { note: 'F#', scale: [], selected: false },
-          { note: 'C#', scale: [], selected: false },
-          { note: 'G#', scale: [], selected: false },
-          { note: 'D#', scale: [], selected: false },
-          { note: 'A#', scale: [], selected: false },
-          { note: 'F', scale: [], selected: false },
-          { note: 'C', scale: [], selected: false },
-          { note: 'G', scale: [], selected: false },
-          { note: 'D', scale: [], selected: false },
-          { note: 'A', scale: [], selected: false },
-          { note: 'E', scale: [], selected: false },
+          { note: 'B', scale: [] },
+          { note: 'F#', scale: [] },
+          { note: 'C#', scale: [] },
+          { note: 'G#', scale: [] },
+          { note: 'D#', scale: [] },
+          { note: 'A#', scale: [] },
+          { note: 'F', scale: [] },
+          { note: 'C', scale: [] },
+          { note: 'G', scale: [] },
+          { note: 'D', scale: [] },
+          { note: 'A', scale: [] },
+          { note: 'E', scale: [] },
         ],
       },
     };
@@ -87,22 +87,20 @@ export default {
 </script>
 
 <style scoped>
-.app-keyboard {
+.fx-layout-row {
   display: flex;
   flex-direction: row;
 }
 
-.app-keysets {
-  display: flex;
-  flex-direction: row;
-}
-
-.app-keyset {
+.fx-layout-col {
   display: flex;
   flex-direction: column;
 }
 
 .app-keyset:first-child .app-key {
-  border-right: 0;
+  border-bottom: 0;
+}
+.app-keyset .app-key:not(:first-child) {
+  border-left: 0;
 }
 </style>
