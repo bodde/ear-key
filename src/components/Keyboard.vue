@@ -3,11 +3,11 @@
     <div class="fx-layout-col">
       <div class="app-black-keys fx-layout-row">
         <template v-for="(note, index) in sharpNotes">
-          <key :note="note" :sharp="true" />
+          <key :note="note" :sharp="true" @click="play(note)" />
         </template>
       </div>
       <div class="fx-layout-row">
-        <key v-for="(note, index) in notes" :note="note" />
+        <key v-for="(note, index) in notes" :note="note" @click="play(note)" />
       </div>
     </div>
     <div class="fx-layout-col">
@@ -92,9 +92,10 @@ export default {
       allKeys.filter((_) => _.selected).forEach((_) => (_.selected = false));
 
       scaleKey.selected = true;
-
+    },
+    play: function (note) {
       const octave = 4;
-      this.synth.triggerAttackRelease(scaleKey.note + octave, '8n');
+      this.synth.triggerAttackRelease(note + octave, '8n');
     },
   },
 };
