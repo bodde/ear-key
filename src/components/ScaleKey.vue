@@ -1,13 +1,13 @@
 <template>
-  <div class="app-key" :class="{ selected: selected }">
-    <span class="app-key-code">{{ code }}</span>
-    <small class="app-key-note">{{ note }}</small>
+  <div class="app-scale-key" :class="{ selected: selected }">
+    <span class="app-scale-key-code">{{ code }}</span>
+    <small class="app-scale-key-note">{{ note }}</small>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Key',
+  name: 'ScaleKey',
   props: {
     note: String,
     code: String,
@@ -16,8 +16,8 @@ export default {
 };
 </script>
 
-<style scoped>
-.app-key {
+<style>
+.app-scale-key {
   font-size: 14px;
   padding: 4px;
   min-width: 40px;
@@ -27,22 +27,22 @@ export default {
   cursor: pointer;
 }
 
-.app-key:hover {
+.app-scale-key:hover {
   box-shadow: 0 0 5px black;
 }
 
-.app-key.selected {
+.app-scale-key.selected {
   background-color: aqua;
 }
 
-.app-key:first-child {
+.app-scale-key:first-child {
   border-width: 1px;
 }
 
-.app-key-code {
+.app-scale-key-code {
 }
 
-.app-key-note {
+.app-scale-key-note {
   color: gray;
   position: absolute;
   bottom: 4px;

@@ -1,8 +1,10 @@
 <template>
   <div class="fx-layout-col">
+    <div class="fx-layout-col"></div>
+
     <div class="fx-layout-col">
-      <div class="app-keyset fx-layout-row">
-        <Key
+      <div class="app-scale fx-layout-row">
+        <scale-key
           v-for="(key, index) in keys.minor"
           :note="key.note"
           :code="(index + 1).toString() + 'A'"
@@ -10,8 +12,8 @@
           @click="select(key, 'minor')"
         />
       </div>
-      <div class="app-keyset fx-layout-row">
-        <Key
+      <div class="app-scale fx-layout-row">
+        <scale-key
           v-for="(key, index) in keys.major"
           :note="key.note"
           :code="(index + 1).toString() + 'B'"
@@ -24,13 +26,13 @@
 </template>
 
 <script>
-import Key from './Key.vue';
+import ScaleKey from './ScaleKey.vue';
 import { Sampler, Transport, Synth, PolySynth } from 'tone';
 
 export default {
   name: 'Keyboard',
   components: {
-    Key,
+    ScaleKey,
   },
   created: function () {
     this.synth = new Synth().toDestination();
@@ -38,6 +40,8 @@ export default {
   },
   data: function () {
     return {
+      notes: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
+      sharpNotes: ['C#', 'D#', 'F#', 'G#', 'A#'],
       keys: {
         minor: [
           { note: 'G#', scale: [] },
@@ -71,12 +75,12 @@ export default {
     };
   },
   methods: {
-    select: function (key, keyset) {
+    select: function (key, scale) {
       const allKeys = this.keys.minor.concat(this.keys.major);
 
       allKeys.filter((_) => _.selected).forEach((_) => (_.selected = false));
 
-      const selectedKey = this.keys[keyset].find((_) => _.note == key.note);
+      const selectedKey = this.keys[scale].find((_) => _.note == key.note);
       selectedKey.selected = true;
 
       const octave = 4;
@@ -86,7 +90,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .fx-layout-row {
   display: flex;
   flex-direction: row;
@@ -97,10 +101,10 @@ export default {
   flex-direction: column;
 }
 
-.app-keyset:first-child .app-key {
+.app-scale:first-child .app-scale-key {
   border-bottom: 0;
 }
-.app-keyset .app-key:not(:first-child) {
+.app-scale .app-scale-key:not(:first-child) {
   border-left: 0;
 }
 </style>
