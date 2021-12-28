@@ -1,6 +1,18 @@
 <template>
-  <div class="app-key" :class="{ sharp: sharp, placeholder: !note }">
-    <span class="app-key-note">{{ note }}</span>
+  <div>
+    <div
+      v-if="sharp"
+      class="app-key-selected-indicator"
+      :class="{ on: selected }"
+    ></div>
+    <div class="app-key" :class="{ sharp: sharp, placeholder: !note }">
+      <span class="app-key-note">{{ note }}</span>
+    </div>
+    <div
+      v-if="!sharp"
+      class="app-key-selected-indicator"
+      :class="{ on: selected }"
+    ></div>
   </div>
 </template>
 
@@ -10,6 +22,7 @@ export default {
   props: {
     note: String,
     sharp: Boolean,
+    selected: Boolean,
   },
 };
 </script>
@@ -42,5 +55,13 @@ export default {
   bottom: 4px;
   text-align: center;
   width: 100%;
+}
+
+.app-key-selected-indicator {
+  border: 2px solid white;
+}
+
+.app-key-selected-indicator.on {
+  border-color: green;
 }
 </style>
