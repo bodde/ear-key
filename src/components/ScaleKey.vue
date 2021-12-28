@@ -35,10 +35,6 @@ export default {
   background-color: aqua;
 }
 
-.app-scale-key:first-child {
-  border-width: 1px;
-}
-
 .app-scale-key-code {
 }
 

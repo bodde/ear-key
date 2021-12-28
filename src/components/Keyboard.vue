@@ -1,6 +1,15 @@
 <template>
-  <div class="fx-layout-col">
-    <div class="fx-layout-col"></div>
+  <div class="fx-layout-col fx-vertical-gap">
+    <div class="fx-layout-col">
+      <div class="app-black-keys fx-layout-row">
+        <template v-for="(note, index) in sharpNotes">
+          <key :note="note" :sharp="true" />
+        </template>
+      </div>
+      <div class="fx-layout-row">
+        <key v-for="(note, index) in notes" :note="note" />
+      </div>
+    </div>
     <div class="fx-layout-col">
       <div class="app-scale fx-layout-row">
         <scale-key
@@ -26,12 +35,14 @@
 </template>
 
 <script>
+import Key from './Key.vue';
 import ScaleKey from './ScaleKey.vue';
 import { Sampler, Transport, Synth, PolySynth } from 'tone';
 
 export default {
   name: 'Keyboard',
   components: {
+    Key,
     ScaleKey,
   },
   created: function () {
@@ -100,9 +111,23 @@ export default {
   flex-direction: column;
 }
 
-.app-scale:first-child .app-scale-key {
+.fx-vertical-gap > *:not(:first-child) {
+  margin-top: 8px;
+}
+
+.app-key:not(:first-child) {
+  border-left: 0;
+}
+
+.app-black-keys {
+  margin-left: 20px;
+}
+
+.app-scale:first-child .app-scale-key,
+.app-black-keys .app-key {
   border-bottom: 0;
 }
+
 .app-scale .app-scale-key:not(:first-child) {
   border-left: 0;
 }
