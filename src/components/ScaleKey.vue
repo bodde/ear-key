@@ -1,9 +1,9 @@
 <template>
-  <div
-    class="app-scale-key"
-    :class="{ selected: score == 5 }"
-    :style="cssStyle(score)"
-  >
+  <div class="app-scale-key" :style="cssStyle(score)">
+    <div
+      class="app-scale-key-selected-indicator"
+      :class="{ on: selected }"
+    ></div>
     <span class="app-scale-key-code">{{ code }}</span>
     <small class="app-scale-key-note">{{ note }}</small>
     <small class="app-scale-key-score">{{ score }}</small>
@@ -15,6 +15,7 @@ export default {
   name: 'ScaleKey',
   props: {
     note: String,
+    minor: Boolean,
     code: String,
     selected: Boolean,
     score: Number,
@@ -40,11 +41,7 @@ export default {
 }
 
 .app-scale-key:hover {
-  box-shadow: 0 0 10px black;
-}
-
-.app-scale-key.selected {
-  box-shadow: 0 0 5px yellow;
+  box-shadow: 0 0 5px black;
 }
 
 .app-scale-key-code {
@@ -62,5 +59,13 @@ export default {
   position: absolute;
   bottom: 4px;
   left: 4px;
+}
+
+.app-scale-key-selected-indicator {
+  border: 2px solid white;
+}
+
+.app-scale-key-selected-indicator.on {
+  border-color: yellow;
 }
 </style>

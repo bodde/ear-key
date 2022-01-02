@@ -1,5 +1,5 @@
 <template>
-  <div>{{ selectedScale && selectedScale.note }}</div>
+  <div>{{ selectedScaleKey && selectedScaleKey.note }}</div>
   <div class="fx-layout-col fx-vertical-gap">
     <div class="fx-layout-col">
       <div class="app-black-keys fx-layout-row">
@@ -28,8 +28,9 @@
         <scale-key
           v-for="(key, index) in scales.minor"
           :note="key.note"
+          :minor="true"
           :code="(index + 1).toString() + 'A'"
-          :selected="key === selectedScale"
+          :selected="key === selectedScaleKey"
           :score="key.score || 0"
           @click="select(key)"
         />
@@ -39,8 +40,9 @@
           v-for="(key, index) in scales.major"
           :key="key"
           :note="key.note"
+          :minor="false"
           :code="(index + 1).toString() + 'B'"
-          :selected="key === selectedScale"
+          :selected="key === selectedScaleKey"
           :score="key.score || 0"
           @click="select(key)"
         />
@@ -69,7 +71,7 @@ export default {
       notes: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
       sharpNotes: ['C#', 'D#', null, 'F#', 'G#', 'A#'],
       selectedNotes: [],
-      selectedScale: null,
+      selectedScaleKey: null,
       scales: {
         minor: [
           { note: 'G#', scale: ['G#', 'B', 'C#', 'D#', 'F#'] },
@@ -104,7 +106,7 @@ export default {
   },
   methods: {
     select: function (scaleKey) {
-      this.selectedScale = scaleKey;
+      this.selectedScaleKey = scaleKey;
     },
     play: function (note) {
       const octave = 4;
@@ -160,5 +162,13 @@ export default {
 
 .app-scale .app-scale-key:not(:first-child) {
   border-left: 0;
+}
+
+.app-scalekey-selected-indicator {
+  border: 2px solid white;
+}
+
+.app-scalekey-selected-indicator.on {
+  border-color: yellow;
 }
 </style>
