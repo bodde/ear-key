@@ -3,6 +3,10 @@
     <div class="app-key" :class="{ sharp: sharp, placeholder: !note }">
       <div class="app-key-selector-area" class="fx-layout-row">
         <div class="app-key-selected-indicator" :class="{ on: selected }"></div>
+        <div
+          class="app-key-matches-scale-indicator"
+          :class="{ on: matchesScale }"
+        ></div>
       </div>
       <span class="app-key-note">{{ note }}</span>
     </div>
@@ -16,6 +20,7 @@ export default {
     note: String,
     sharp: Boolean,
     selected: Boolean,
+    matchesScale: Boolean,
   },
 };
 </script>
@@ -60,6 +65,12 @@ export default {
 
 .app-key-selected-indicator.on {
   background-color: green;
+  height: 100%;
+  width: 100%;
+}
+
+.app-key-matches-scale-indicator.on {
+  background-color: orange;
   height: 100%;
   width: 100%;
 }

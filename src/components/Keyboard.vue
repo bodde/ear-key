@@ -7,6 +7,9 @@
             :note="note"
             :sharp="true"
             :selected="selectedNotes.includes(note)"
+            :matchesScale="
+              selectedScaleKey && selectedScaleKey.scale.includes(note)
+            "
             @click="play(note)"
             @contextmenu.prevent="toggleNote(note)"
           />
@@ -17,6 +20,9 @@
           v-for="(note, index) in notes"
           :note="note"
           :selected="selectedNotes.includes(note)"
+          :matchesScale="
+            selectedScaleKey && selectedScaleKey.scale.includes(note)
+          "
           @click="play(note)"
           @contextmenu.prevent="toggleNote(note)"
         />

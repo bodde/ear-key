@@ -62,10 +62,12 @@ export default {
 }
 
 .app-scale-key-selected-indicator {
-  border: 2px solid white;
+  height: 4px;
+  width: 100%;
+  margin: 1px, 4px;
 }
 
 .app-scale-key-selected-indicator.on {
-  border-color: yellow;
+  background-color: orange;
 }
 </style>
