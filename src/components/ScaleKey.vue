@@ -2,7 +2,7 @@
   <div
     class="app-scale-key"
     :class="{ selected: score == 5 }"
-    v-bind:style="{ opacity: (score * 2) / 10 }"
+    :style="cssStyle(score)"
   >
     <span class="app-scale-key-code">{{ code }}</span>
     <small class="app-scale-key-note">{{ note }}</small>
@@ -19,6 +19,12 @@ export default {
     selected: Boolean,
     score: Number,
   },
+  methods: {
+    cssStyle: function (score) {
+      const a = (score * 2) / 10;
+      return { backgroundColor: `rgba(5, 195, 221,${a})` };
+    },
+  },
 };
 </script>
 
@@ -34,11 +40,11 @@ export default {
 }
 
 .app-scale-key:hover {
-  box-shadow: 0 0 5px black;
+  box-shadow: 0 0 10px black;
 }
 
 .app-scale-key.selected {
-  background-color: aqua;
+  box-shadow: 0 0 5px yellow;
 }
 
 .app-scale-key-code {
