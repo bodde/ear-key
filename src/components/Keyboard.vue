@@ -1,6 +1,8 @@
 <template>
+  <button @click="reset()">Reset</button>
+  <hr />
   <div class="fx-layout-col fx-vertical-gap">
-    <div class="fx-layout-col">
+    <div class="fx-layout-col" @keydown.prevent="playKey($event)" tabindex="0">
       <div class="app-black-keys fx-layout-row">
         <template v-for="(note, index) in sharpNotes">
           <key
@@ -34,7 +36,7 @@
           v-for="(key, index) in scales.minor"
           :note="key.note"
           :minor="true"
-          :code="(index + 1).toString() + 'A'"
+          :code="key.code"
           :selected="key === selectedScaleKey"
           :score="key.score || 0"
           @click="select(key)"
@@ -46,7 +48,7 @@
           :key="key"
           :note="key.note"
           :minor="false"
-          :code="(index + 1).toString() + 'B'"
+          :code="key.code"
           :selected="key === selectedScaleKey"
           :score="key.score || 0"
           @click="select(key)"
@@ -79,43 +81,70 @@ export default {
       selectedScaleKey: null,
       scales: {
         minor: [
-          { note: 'G#', scale: ['G#', 'B', 'C#', 'D#', 'F#'] },
-          { note: 'D#', scale: ['D#', 'F#', 'G#', 'A#', 'C#'] },
-          { note: 'A#', scale: ['A#', 'C#', 'D#', 'F', 'G#'] },
-          { note: 'F', scale: ['F', 'G#', 'A#', 'C', 'D#'] },
-          { note: 'C', scale: ['C', 'D#', 'F', 'G', 'A#'] },
-          { note: 'G', scale: ['G', 'A#', 'C', 'D', 'F'] },
-          { note: 'D', scale: ['D', 'F', 'G', 'A', 'C'] },
-          { note: 'A', scale: ['A', 'C', 'D', 'E', 'G'] },
-          { note: 'E', scale: ['E', 'G', 'A', 'B', 'D'] },
-          { note: 'B', scale: ['B', 'D', 'E', 'F#', 'A'] },
-          { note: 'F#', scale: ['F#', 'A', 'B', 'C#', 'E'] },
-          { note: 'C#', scale: ['C#', 'E', 'F#', 'G#', 'B'] },
+          { code: '01A', note: 'G#', scale: ['G#', 'B', 'C#', 'D#', 'F#'] },
+          { code: '02A', note: 'D#', scale: ['D#', 'F#', 'G#', 'A#', 'C#'] },
+          { code: '03A', note: 'A#', scale: ['A#', 'C#', 'D#', 'F', 'G#'] },
+          { code: '04A', note: 'F', scale: ['F', 'G#', 'A#', 'C', 'D#'] },
+          { code: '05A', note: 'C', scale: ['C', 'D#', 'F', 'G', 'A#'] },
+          { code: '06A', note: 'G', scale: ['G', 'A#', 'C', 'D', 'F'] },
+          { code: '07A', note: 'D', scale: ['D', 'F', 'G', 'A', 'C'] },
+          { code: '08A', note: 'A', scale: ['A', 'C', 'D', 'E', 'G'] },
+          { code: '09A', note: 'E', scale: ['E', 'G', 'A', 'B', 'D'] },
+          { code: '10A', note: 'B', scale: ['B', 'D', 'E', 'F#', 'A'] },
+          { code: '11A', note: 'F#', scale: ['F#', 'A', 'B', 'C#', 'E'] },
+          { code: '12A', note: 'C#', scale: ['C#', 'E', 'F#', 'G#', 'B'] },
         ],
         major: [
-          { note: 'B', scale: ['B', 'C#', 'D#', 'F#', 'G#'] },
-          { note: 'F#', scale: ['F#', 'G#', 'A#', 'C#', 'D#'] },
-          { note: 'C#', scale: ['C#', 'D#', 'F', 'G#', 'A#'] },
-          { note: 'G#', scale: ['G#', 'A#', 'C', 'D#', 'F'] },
-          { note: 'D#', scale: ['D#', 'F', 'G', 'A#', 'C'] },
-          { note: 'A#', scale: ['A#', 'C', 'D', 'F', 'G'] },
-          { note: 'F', scale: ['F', 'G', 'A', 'C', 'D'] },
-          { note: 'C', scale: ['C', 'D', 'E', 'G', 'A'] },
-          { note: 'G', scale: ['G', 'A', 'B', 'D', 'E'] },
-          { note: 'D', scale: ['D', 'E', 'F#', 'A', 'B'] },
-          { note: 'A', scale: ['A', 'B', 'C#', 'E', 'F#'] },
-          { note: 'E', scale: ['E', 'F#', 'G#', 'B', 'C#'] },
+          { code: '01B', note: 'B', scale: ['B', 'C#', 'D#', 'F#', 'G#'] },
+          { code: '02B', note: 'F#', scale: ['F#', 'G#', 'A#', 'C#', 'D#'] },
+          { code: '03B', note: 'C#', scale: ['C#', 'D#', 'F', 'G#', 'A#'] },
+          { code: '04B', note: 'G#', scale: ['G#', 'A#', 'C', 'D#', 'F'] },
+          { code: '05B', note: 'D#', scale: ['D#', 'F', 'G', 'A#', 'C'] },
+          { code: '06B', note: 'A#', scale: ['A#', 'C', 'D', 'F', 'G'] },
+          { code: '07B', note: 'F', scale: ['F', 'G', 'A', 'C', 'D'] },
+          { code: '08B', note: 'C', scale: ['C', 'D', 'E', 'G', 'A'] },
+          { code: '09B', note: 'G', scale: ['G', 'A', 'B', 'D', 'E'] },
+          { code: '10B', note: 'D', scale: ['D', 'E', 'F#', 'A', 'B'] },
+          { code: '11B', note: 'A', scale: ['A', 'B', 'C#', 'E', 'F#'] },
+          { code: '12B', note: 'E', scale: ['E', 'F#', 'G#', 'B', 'C#'] },
         ],
+      },
+      keyNotesMap: {
+        KeyA: 'C',
+        KeyW: 'C#',
+        KeyS: 'D',
+        KeyE: 'D#',
+        KeyD: 'E',
+        KeyF: 'F',
+        KeyT: 'F#',
+        KeyG: 'G',
+        KeyY: 'G#',
+        KeyH: 'A',
+        KeyU: 'A#',
+        KeyJ: 'B',
       },
     };
   },
   methods: {
+    reset: function () {
+      this.selectedScaleKey = null;
+      this.selectedNotes = [];
+      const allKeys = [...this.scales.minor, ...this.scales.major];
+      allKeys.forEach((scaleKey) => (scaleKey.score = 0));
+    },
     select: function (scaleKey) {
       this.selectedScaleKey = scaleKey;
     },
     play: function (note) {
       const octave = 4;
       this.synth.triggerAttackRelease(note + octave, '8n');
+    },
+    playKey: function (event) {
+      console.log(event);
+      const note = this.keyNotesMap[event.code];
+      if (note) {
+        this.play(note);
+      }
     },
     toggleNote: function (note) {
       const selectedNoteIndex = this.selectedNotes.indexOf(note);
