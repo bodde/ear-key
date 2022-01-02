@@ -1,18 +1,11 @@
 <template>
   <div>
-    <div
-      v-if="sharp"
-      class="app-key-selected-indicator"
-      :class="{ on: selected }"
-    ></div>
     <div class="app-key" :class="{ sharp: sharp, placeholder: !note }">
+      <div class="app-key-selector-area" class="fx-layout-row">
+        <div class="app-key-selected-indicator" :class="{ on: selected }"></div>
+      </div>
       <span class="app-key-note">{{ note }}</span>
     </div>
-    <div
-      v-if="!sharp"
-      class="app-key-selected-indicator"
-      :class="{ on: selected }"
-    ></div>
   </div>
 </template>
 
@@ -57,11 +50,17 @@ export default {
   width: 100%;
 }
 
-.app-key-selected-indicator {
-  border: 2px solid white;
+.app-key-selector-area {
+  height: 4px;
+  width: 80%;
+  margin-top: 1px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .app-key-selected-indicator.on {
-  border-color: green;
+  background-color: green;
+  height: 100%;
+  width: 100%;
 }
 </style>

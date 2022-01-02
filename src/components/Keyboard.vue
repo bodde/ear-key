@@ -1,5 +1,4 @@
 <template>
-  <div>{{ selectedScaleKey && selectedScaleKey.note }}</div>
   <div class="fx-layout-col fx-vertical-gap">
     <div class="fx-layout-col">
       <div class="app-black-keys fx-layout-row">
