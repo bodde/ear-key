@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="app-key" :class="{ sharp: sharp, placeholder: !note }">
-      <div class="app-key-selector-area" class="fx-layout-row">
+      <div class="fx-layout-row app-key-selector-area">
         <div class="app-key-selected-indicator" :class="{ on: selected }"></div>
         <div
           class="app-key-matches-scale-indicator"

@@ -4,7 +4,7 @@
   <div class="fx-layout-col fx-vertical-gap">
     <div class="fx-layout-col" @keydown.prevent="playKey($event)" tabindex="0">
       <div class="app-black-keys fx-layout-row">
-        <template v-for="(note, index) in sharpNotes">
+        <template v-for="note in sharpNotes" v-bind:key="note">
           <key
             :note="note"
             :sharp="true"
@@ -19,7 +19,8 @@
       </div>
       <div class="fx-layout-row">
         <key
-          v-for="(note, index) in notes"
+          v-for="note in notes"
+          v-bind:key="note"
           :note="note"
           :selected="selectedNotes.includes(note)"
           :matchesScale="
@@ -33,7 +34,8 @@
     <div class="fx-layout-col">
       <div class="app-scale fx-layout-row">
         <scale-key
-          v-for="(key, index) in scales.minor"
+          v-for="key in scales.minor"
+          v-bind:key="key.note"
           :note="key.note"
           :minor="true"
           :code="key.code"
@@ -44,8 +46,8 @@
       </div>
       <div class="app-scale fx-layout-row">
         <scale-key
-          v-for="(key, index) in scales.major"
-          :key="key"
+          v-for="key in scales.major"
+          v-bind:key="key.note"
           :note="key.note"
           :minor="false"
           :code="key.code"
@@ -59,12 +61,12 @@
 </template>
 
 <script>
-import Key from './Key.vue';
-import ScaleKey from './ScaleKey.vue';
-import { Sampler, Transport, Synth, PolySynth } from 'tone';
+import Key from "./Key.vue";
+import ScaleKey from "./ScaleKey.vue";
+import { Synth } from "tone";
 
 export default {
-  name: 'Keyboard',
+  name: "Keyboard",
   components: {
     Key,
     ScaleKey,
@@ -75,53 +77,53 @@ export default {
   },
   data: function () {
     return {
-      notes: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
-      sharpNotes: ['C#', 'D#', null, 'F#', 'G#', 'A#'],
+      notes: ["C", "D", "E", "F", "G", "A", "B"],
+      sharpNotes: ["C#", "D#", null, "F#", "G#", "A#"],
       selectedNotes: [],
       selectedScaleKey: null,
       scales: {
         minor: [
-          { code: '01A', note: 'G#', scale: ['G#', 'B', 'C#', 'D#', 'F#'] },
-          { code: '02A', note: 'D#', scale: ['D#', 'F#', 'G#', 'A#', 'C#'] },
-          { code: '03A', note: 'A#', scale: ['A#', 'C#', 'D#', 'F', 'G#'] },
-          { code: '04A', note: 'F', scale: ['F', 'G#', 'A#', 'C', 'D#'] },
-          { code: '05A', note: 'C', scale: ['C', 'D#', 'F', 'G', 'A#'] },
-          { code: '06A', note: 'G', scale: ['G', 'A#', 'C', 'D', 'F'] },
-          { code: '07A', note: 'D', scale: ['D', 'F', 'G', 'A', 'C'] },
-          { code: '08A', note: 'A', scale: ['A', 'C', 'D', 'E', 'G'] },
-          { code: '09A', note: 'E', scale: ['E', 'G', 'A', 'B', 'D'] },
-          { code: '10A', note: 'B', scale: ['B', 'D', 'E', 'F#', 'A'] },
-          { code: '11A', note: 'F#', scale: ['F#', 'A', 'B', 'C#', 'E'] },
-          { code: '12A', note: 'C#', scale: ['C#', 'E', 'F#', 'G#', 'B'] },
+          { code: "01A", note: "G#", scale: ["G#", "B", "C#", "D#", "F#"] },
+          { code: "02A", note: "D#", scale: ["D#", "F#", "G#", "A#", "C#"] },
+          { code: "03A", note: "A#", scale: ["A#", "C#", "D#", "F", "G#"] },
+          { code: "04A", note: "F", scale: ["F", "G#", "A#", "C", "D#"] },
+          { code: "05A", note: "C", scale: ["C", "D#", "F", "G", "A#"] },
+          { code: "06A", note: "G", scale: ["G", "A#", "C", "D", "F"] },
+          { code: "07A", note: "D", scale: ["D", "F", "G", "A", "C"] },
+          { code: "08A", note: "A", scale: ["A", "C", "D", "E", "G"] },
+          { code: "09A", note: "E", scale: ["E", "G", "A", "B", "D"] },
+          { code: "10A", note: "B", scale: ["B", "D", "E", "F#", "A"] },
+          { code: "11A", note: "F#", scale: ["F#", "A", "B", "C#", "E"] },
+          { code: "12A", note: "C#", scale: ["C#", "E", "F#", "G#", "B"] },
         ],
         major: [
-          { code: '01B', note: 'B', scale: ['B', 'C#', 'D#', 'F#', 'G#'] },
-          { code: '02B', note: 'F#', scale: ['F#', 'G#', 'A#', 'C#', 'D#'] },
-          { code: '03B', note: 'C#', scale: ['C#', 'D#', 'F', 'G#', 'A#'] },
-          { code: '04B', note: 'G#', scale: ['G#', 'A#', 'C', 'D#', 'F'] },
-          { code: '05B', note: 'D#', scale: ['D#', 'F', 'G', 'A#', 'C'] },
-          { code: '06B', note: 'A#', scale: ['A#', 'C', 'D', 'F', 'G'] },
-          { code: '07B', note: 'F', scale: ['F', 'G', 'A', 'C', 'D'] },
-          { code: '08B', note: 'C', scale: ['C', 'D', 'E', 'G', 'A'] },
-          { code: '09B', note: 'G', scale: ['G', 'A', 'B', 'D', 'E'] },
-          { code: '10B', note: 'D', scale: ['D', 'E', 'F#', 'A', 'B'] },
-          { code: '11B', note: 'A', scale: ['A', 'B', 'C#', 'E', 'F#'] },
-          { code: '12B', note: 'E', scale: ['E', 'F#', 'G#', 'B', 'C#'] },
+          { code: "01B", note: "B", scale: ["B", "C#", "D#", "F#", "G#"] },
+          { code: "02B", note: "F#", scale: ["F#", "G#", "A#", "C#", "D#"] },
+          { code: "03B", note: "C#", scale: ["C#", "D#", "F", "G#", "A#"] },
+          { code: "04B", note: "G#", scale: ["G#", "A#", "C", "D#", "F"] },
+          { code: "05B", note: "D#", scale: ["D#", "F", "G", "A#", "C"] },
+          { code: "06B", note: "A#", scale: ["A#", "C", "D", "F", "G"] },
+          { code: "07B", note: "F", scale: ["F", "G", "A", "C", "D"] },
+          { code: "08B", note: "C", scale: ["C", "D", "E", "G", "A"] },
+          { code: "09B", note: "G", scale: ["G", "A", "B", "D", "E"] },
+          { code: "10B", note: "D", scale: ["D", "E", "F#", "A", "B"] },
+          { code: "11B", note: "A", scale: ["A", "B", "C#", "E", "F#"] },
+          { code: "12B", note: "E", scale: ["E", "F#", "G#", "B", "C#"] },
         ],
       },
       keyNotesMap: {
-        KeyA: 'C',
-        KeyW: 'C#',
-        KeyS: 'D',
-        KeyE: 'D#',
-        KeyD: 'E',
-        KeyF: 'F',
-        KeyT: 'F#',
-        KeyG: 'G',
-        KeyY: 'G#',
-        KeyH: 'A',
-        KeyU: 'A#',
-        KeyJ: 'B',
+        KeyA: "C",
+        KeyW: "C#",
+        KeyS: "D",
+        KeyE: "D#",
+        KeyD: "E",
+        KeyF: "F",
+        KeyT: "F#",
+        KeyG: "G",
+        KeyY: "G#",
+        KeyH: "A",
+        KeyU: "A#",
+        KeyJ: "B",
       },
     };
   },
@@ -137,7 +139,7 @@ export default {
     },
     play: function (note) {
       const octave = 4;
-      this.synth.triggerAttackRelease(note + octave, '8n');
+      this.synth.triggerAttackRelease(note + octave, "8n");
     },
     playKey: function (event) {
       console.log(event);
